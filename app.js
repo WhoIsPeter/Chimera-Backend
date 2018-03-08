@@ -10,11 +10,15 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
 
+const users = require(('./routes/users'));
+
 // CORS Middleware
 app.use(cors());
 
 // body-parser Middleware
 app.use(bodyParser.json());
+
+app.use('/users', users);
 
 // Index route
 app.get('/', (req, res) => {
