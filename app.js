@@ -6,6 +6,16 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
+mongoose.connect("mongodb+srv://admin:Hk3bFaV9lOI11GzE@cluster0-suad4.mongodb.net/chimera");
+
+mongoose.connection.on('connected', () => {
+    console.log('Connected to Chimera database')
+});
+
+mongoose.connection.on('error', () => {
+    console.log('Error connecting to Chimera database')
+});
+
 // App definition
 const app = express();
 const port = 3000;
