@@ -6,7 +6,8 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://admin:Hk3bFaV9lOI11GzE@cluster0-suad4.mongodb.net/chimera");
+const connectionString = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-shard-00-00-xirsx.mongodb.net:27017,cluster0-shard-00-01-xirsx.mongodb.net:27017,cluster0-shard-00-02-xirsx.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin`;
+mongoose.connect(connectionString);
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to Chimera database')
@@ -27,6 +28,12 @@ app.use(cors());
 
 // body-parser Middleware
 app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 app.use('/users', users);
 
